@@ -102,7 +102,9 @@ let app = {
         size += HELP_PART.length;
       }
       const lines = Array(size).fill(0);
-      this.editor.numbersText = lines.map((v, i) => `${i + 1}.`).join("\n");
+      this.editor.numbersText = debugDataSplit
+        .map((v, i) => `${i + 1}.`)
+        .join("\n");
       this.editor.overlayText = lines
         .map((v, i) => {
           if (debugDataSplit.length > i && debugDataSplit[i].trim().length) {
@@ -143,6 +145,7 @@ let app = {
     this.updateIcons();
     this.$refs.code?.addEventListener("scroll", () => {
       this.$refs.numbers.scrollTop = this.$refs.code.scrollTop;
+      this.$refs.overlayNumbers.scrollTop = this.$refs.code.scrollTop;
       this.$refs.overlay.scrollTop = this.$refs.code.scrollTop;
       this.$refs.overlay.scrollLeft = this.$refs.code.scrollLeft;
     });

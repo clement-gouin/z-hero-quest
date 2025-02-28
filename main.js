@@ -3,6 +3,11 @@ import { createApp } from "vue";
 // TODO: 3. change data format
 const HELP_HEADER = ["Title and description (html, <h1> on plain text)"];
 const HELP_PART = ["Data (html)"];
+const DEFAULT_VALUES = {
+  // TODO: 5. implement custom logic
+  header: "",
+  data: [],
+};
 
 const utils = {
   base64URLTobase64(str) {
@@ -41,11 +46,7 @@ const app = createApp({
         numbersText: "",
         overlayText: "",
       },
-      parsed: {
-        // TODO: 5. implement custom logic
-        header: "",
-        data: [],
-      },
+      parsed: DEFAULT_VALUES,
     };
   },
   computed: {},
@@ -131,6 +132,7 @@ const app = createApp({
     readZData(str) {
       // TODO: 5. implement custom logic
       this.debugData = str;
+      this.parsed = DEFAULT_VALUES;
       const parts = str.split("\n");
       if (parts.length < 1) {
         return true;

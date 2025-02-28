@@ -68,15 +68,6 @@ let app = {
     showApp() {
       document.getElementById("app").setAttribute("style", "");
     },
-    updateIcons() {
-      lucide.createIcons({
-        nameAttr: "icon",
-        attrs: {
-          width: "1.1em",
-          height: "1.1em",
-        },
-      });
-    },
     initApp() {
       const url = new URL(window.location);
       if (url.searchParams.get("z") !== null) {
@@ -89,6 +80,15 @@ let app = {
         this.updateEditor(this.debugData);
         this.updateDebugUrl(this.debugData);
       }
+    },
+    updateIcons() {
+      lucide.createIcons({
+        nameAttr: "icon",
+        attrs: {
+          width: "1.1em",
+          height: "1.1em",
+        },
+      });
     },
     updateDebugUrl(value) {
       this.debugUrl = value.trim().length

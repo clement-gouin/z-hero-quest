@@ -27,13 +27,6 @@ const utils = {
       .reverse()
       .join("");
   },
-  normalize(str) {
-    return str
-      .trim()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase();
-  },
 };
 
 let app = {

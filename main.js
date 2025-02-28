@@ -31,6 +31,9 @@ const utils = {
       .reverse()
       .join("");
   },
+  clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  },
 };
 
 const app = createApp({
@@ -132,7 +135,7 @@ const app = createApp({
     readZData(str) {
       // TODO: 5. implement custom logic
       this.debugData = str;
-      this.parsed = DEFAULT_VALUES;
+      this.parsed = utils.clone(DEFAULT_VALUES);
       const parts = str.split("\n");
       if (parts.length < 1) {
         return true;

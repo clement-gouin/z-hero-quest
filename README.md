@@ -49,10 +49,10 @@ Url encoded app template
 ## Apps using this template
 
 * [This repository](https://github.com/clement-gouin/z-app)
-* [Treasure-Finder](https://github.com/clement-gouin/treasure-finder)
-* [On-The-Quizz](https://github.com/clement-gouin/on-the-quizz)
-* [Cross-Roads](https://github.com/clement-gouin/on-the-quizz)
-* [Dice-Roller](https://github.com/clement-gouin/cross-roads)
+* [Treasure-Finder](https://github.com/clement-gouin/z-treasure-finder)
+* [On-The-Quizz](https://github.com/clement-gouin/z-on-the-quizz)
+* [Cross-Roads](https://github.com/clement-gouin/z-on-the-quizz)
+* [Dice-Roller](https://github.com/clement-gouin/z-cross-roads)
 
 ## Tips
 

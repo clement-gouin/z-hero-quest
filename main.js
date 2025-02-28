@@ -1,3 +1,5 @@
+import { createApp } from "vue";
+
 // TODO: 3. change data format
 const HELP_HEADER = ["Title and description (html, <h1> on plain text)"];
 const HELP_PART = ["Data (html)"];
@@ -26,7 +28,7 @@ const utils = {
   },
 };
 
-const app = {
+const app = createApp({
   data() {
     return {
       debug: true,
@@ -53,6 +55,16 @@ const app = {
       this.updateEditor(value);
       this.updateDebugUrl(value);
     },
+  },
+  beforeMount() {
+    this.initApp();
+  },
+  mounted() {
+    setTimeout(this.showApp);
+    this.updateIcons();
+  },
+  updated() {
+    this.updateIcons();
   },
   methods: {
     showApp() {
@@ -134,18 +146,8 @@ const app = {
       return false;
     },
   },
-  beforeMount() {
-    this.initApp();
-  },
-  mounted() {
-    setTimeout(this.showApp);
-    this.updateIcons();
-  },
-  updated() {
-    this.updateIcons();
-  },
-};
+});
 
 window.onload = () => {
-  Vue.createApp(app).mount("#app");
+  app.mount("#app");
 };

@@ -1,4 +1,4 @@
-# Z-App
+# [Z] App (template)
 *Working template for URL encoded app*
 
 <!-- TODO: 1. rename app -->
@@ -48,6 +48,7 @@ Url encoded app template
 
 ## Apps using this template
 
+* [This repository](https://github.com/clement-gouin/z-app)
 * [Treasure-Finder](https://github.com/clement-gouin/treasure-finder)
 * [On-The-Quizz](https://github.com/clement-gouin/on-the-quizz)
 * [Cross-Roads](https://github.com/clement-gouin/on-the-quizz)

@@ -1,19 +1,16 @@
-/* exported app */
-
 // TODO: 3. change data format
-
 const HELP_HEADER = ["Title and description (html, <h1> on plain text)"];
 const HELP_PART = ["Data (html)"];
 
 const utils = {
   base64URLTobase64(str) {
-    const base64Encoded = str.replace(/-/g, "+").replace(/_/g, "/");
+    const base64Encoded = str.replace(/-/gu, "+").replace(/_/gu, "/");
     const padding =
       str.length % 4 === 0 ? "" : "=".repeat(4 - (str.length % 4));
     return base64Encoded + padding;
   },
   base64tobase64URL(str) {
-    return str.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    return str.replace(/\+/gu, "-").replace(/\//gu, "_").replace(/[=]+$/u, "");
   },
   decodeData(str) {
     return LZString.decompressFromBase64(
@@ -29,7 +26,7 @@ const utils = {
   },
 };
 
-let app = {
+const app = {
   data() {
     return {
       debug: true,
@@ -85,7 +82,7 @@ let app = {
     },
     updateDebugUrl(value) {
       this.debugUrl = value.trim().length
-        ? window.location.pathname + "?z=" + utils.encodeData(value.trim())
+        ? `${window.location.pathname}?z=${utils.encodeData(value.trim())}`
         : "";
     },
     updateEditor(value) {
@@ -96,20 +93,28 @@ let app = {
       }
       const lines = Array(size).fill(0);
       this.editor.numbersText = debugDataSplit
-        .map((v, i) => `${i + 1}.`)
+        .map((_value, index) => `${index + 1}.`)
         .join("\n");
       this.editor.overlayText = lines
-        .map((v, i) => {
-          if (debugDataSplit.length > i && debugDataSplit[i].trim().length) {
-            return " ".repeat(debugDataSplit[i].length);
+        .map((_value, index) => {
+          if (
+            debugDataSplit.length > index &&
+            debugDataSplit[index].trim().length
+          ) {
+            return " ".repeat(debugDataSplit[index].length);
           }
-          if (HELP_HEADER.length > i) {
-            return HELP_HEADER[i];
+          if (HELP_HEADER.length > index) {
+            return HELP_HEADER[index];
           }
-          return HELP_PART[(i - HELP_HEADER.length) % HELP_PART.length];
+          return HELP_PART[(index - HELP_HEADER.length) % HELP_PART.length];
         })
         .join("\n");
       this.editor.numbersCols = lines.length.toString().length + 1;
+    },
+    editorScroll() {
+      this.$refs.numbers.scrollTop = this.$refs.code.scrollTop;
+      this.$refs.overlay.scrollTop = this.$refs.code.scrollTop;
+      this.$refs.overlay.scrollLeft = this.$refs.code.scrollLeft;
     },
     readZData(str) {
       // TODO: 5. implement custom logic
@@ -119,7 +124,7 @@ let app = {
         return true;
       }
       this.parsed.header = parts.shift();
-      if (!/<[^>]*>/.test(this.parsed.header)) {
+      if (!/<[^>]*>/u.test(this.parsed.header)) {
         this.parsed.header = `<h1>${this.parsed.header}</h1>`;
       }
       this.parsed.data = [];
@@ -129,26 +134,18 @@ let app = {
       return false;
     },
   },
-  beforeMount: function () {
+  beforeMount() {
     this.initApp();
   },
-  mounted: function () {
-    console.log("app mounted");
+  mounted() {
     setTimeout(this.showApp);
     this.updateIcons();
-    this.$refs.code?.addEventListener("scroll", () => {
-      this.$refs.numbers.scrollTop = this.$refs.code.scrollTop;
-      this.$refs.overlayNumbers.scrollTop = this.$refs.code.scrollTop;
-      this.$refs.overlay.scrollTop = this.$refs.code.scrollTop;
-      this.$refs.overlay.scrollLeft = this.$refs.code.scrollLeft;
-    });
   },
-  updated: function () {
+  updated() {
     this.updateIcons();
   },
 };
 
 window.onload = () => {
-  app = Vue.createApp(app);
-  app.mount("#app");
+  Vue.createApp(app).mount("#app");
 };

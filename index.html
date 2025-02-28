@@ -31,6 +31,7 @@
             v-model="debugData"
             ref="code"
             rows="10"
+            @scroll="editorScroll"
           ></textarea>
           <div class="overlay">
             <textarea :cols="editor.numbersCols" rows="10" readonly></textarea>

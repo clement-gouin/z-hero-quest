@@ -1,8 +1,19 @@
 import { createApp } from "vue";
 
-// TODO: 3. change data format
-const HELP_HEADER = ["Title and description (html, <h1> on plain text)"];
-const HELP_PART = ["Data (html)"];
+const HELP_HEADER = [
+  "Header (html, <h1> on plain text)",
+  'Namespace (optional, "default" by default)',
+  'Hue, Saturation (optional, "180, 30%" by default)',
+];
+const HELP_PART_1 = [
+  "Number of variables shown (0+)",
+  "Lucide Icon, Variable Name, Default Value (numeric)",
+];
+const HELP_PART_2 = [
+  "Number of changes (0+)",
+  "Value change (numeric), Variable Name",
+];
+const HELP_PART_3 = ["Condition (JS eval of variables)", "Data (html)"];
 const DEFAULT_VALUES = {
   // TODO: 5. implement custom logic
   header: "",
@@ -40,9 +51,8 @@ const app = createApp({
   data() {
     return {
       debug: true,
-      // TODO: 4. change sample
       debugData:
-        "Url encoded app template\n<i>Italic text</i>\n<b>Bold text</b>\n<pre>code text</pre>\n<a href='https://google.com'>link</a>",
+        'Welcome to the shop\n1\ncoins, money, 10\n0\nmoney == 0\n<span class=red>You don\'t have enough money</span>\nmoney > 100\n<span class=amber>You can buy this sword <i icon=sword></i></span>\ntrue\n<a href="?z=AIXHru50UGAS68sNpBQgWyYgIGBgCIkOgngmKVcmCsFYPwZABg5gdglg1wQIL" class=button>Go make some money</a>',
       debugUrl: "",
       editor: {
         numbersCols: 0,
@@ -102,30 +112,32 @@ const app = createApp({
         : "";
     },
     updateEditor(value) {
+      // TODO
       const debugDataSplit = value.split("\n");
-      let size = HELP_HEADER.length + HELP_PART.length;
-      while (debugDataSplit.length > size) {
-        size += HELP_PART.length;
-      }
-      const lines = Array(size).fill(0);
+      // let size = HELP_HEADER.length + HELP_PART.length;
+      // while (debugDataSplit.length > size) {
+      //   size += HELP_PART.length;
+      // }
+      // const lines = Array(size).fill(0);
       this.editor.numbersText = debugDataSplit
         .map((_value, index) => `${index + 1}.`)
         .join("\n");
-      this.editor.overlayText = lines
-        .map((_value, index) => {
-          if (
-            debugDataSplit.length > index &&
-            debugDataSplit[index].trim().length
-          ) {
-            return " ".repeat(debugDataSplit[index].length);
-          }
-          if (HELP_HEADER.length > index) {
-            return HELP_HEADER[index];
-          }
-          return HELP_PART[(index - HELP_HEADER.length) % HELP_PART.length];
-        })
-        .join("\n");
-      this.editor.numbersCols = lines.length.toString().length + 1;
+      // this.editor.overlayText = lines
+      //   .map((_value, index) => {
+      //     if (
+      //       debugDataSplit.length > index &&
+      //       debugDataSplit[index].trim().length
+      //     ) {
+      //       return " ".repeat(debugDataSplit[index].length);
+      //     }
+      //     if (HELP_HEADER.length > index) {
+      //       return HELP_HEADER[index];
+      //     }
+      //     return HELP_PART[(index - HELP_HEADER.length) % HELP_PART.length];
+      //   })
+      //   .join("\n");
+      this.editor.numbersCols =
+        this.editor.numbersText.length.toString().length + 1;
     },
     editorScroll() {
       this.$refs.numbers.scrollTop = this.$refs.code.scrollTop;

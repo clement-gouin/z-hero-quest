@@ -1,9 +1,7 @@
-# [Z] App (template)
-*Working template for URL encoded app*
+# [Z] Hero Quest
+*Here to slay dragons *
 
-<!-- TODO: 1. rename app -->
-
-### [Tool link](https://clement-gouin.github.io/z-app/)
+### [Tool link](https://clement-gouin.github.io/z-hero-quest/)
 
 ## Data format
 
@@ -39,7 +37,7 @@ Url encoded app template
 
 > Every task is indicated with a TODO
 
-1. [ ] Rename app in [README.md](./README.md), [main.js](./main.js) and [index.html](./index.html)
+1. [x] Rename app in [README.md](./README.md) and [index.html](./index.html)
 2. [ ] Change app hue and saturation in [style.css](./style.css)
 3. [ ] Change data format in [README.md](./README.md) and [main.js](./main.js)
 4. [ ] Change sample in [README.md](./README.md) and [main.js](./main.js)

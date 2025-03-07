@@ -40,7 +40,7 @@ Url encoded app template
 > Every task is indicated with a TODO
 
 1. [x] Rename app in [README.md](./README.md) and [index.html](./index.html)
-2. [ ] Change app hue and saturation in [style.css](./style.css)
+2. [x] Change app hue and saturation in [style.css](./style.css)
 3. [ ] Change data format in [README.md](./README.md) and [main.js](./main.js)
 4. [ ] Change sample in [README.md](./README.md) and [main.js](./main.js)
 5. [ ] Implement your custom logic in [main.js](./main.js) and [index.html](./index.html)

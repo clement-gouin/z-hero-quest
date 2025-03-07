@@ -62,27 +62,6 @@ coins, money, 10
 10, money
 ```
 
-## Use this template
-
-<!-- TODO: 6. remove this part -->
-
-> Every task is indicated with a TODO
-
-1. [x] Rename app in [README.md](./README.md) and [index.html](./index.html)
-2. [x] Change app hue and saturation in [style.css](./style.css)
-3. [x] Change data format in [README.md](./README.md) and [main.js](./main.js)
-4. [x] Change sample in [README.md](./README.md) and [main.js](./main.js)
-5. [x] Implement your custom logic in [main.js](./main.js) and [index.html](./index.html)
-6. [ ] Remove this part and all TODO
-
-## Apps using this template
-
-* [This repository](https://github.com/clement-gouin/z-app)
-* [Treasure-Finder](https://github.com/clement-gouin/z-treasure-finder)
-* [On-The-Quizz](https://github.com/clement-gouin/z-on-the-quizz)
-* [Cross-Roads](https://github.com/clement-gouin/z-on-the-quizz)
-* [Dice-Roller](https://github.com/clement-gouin/z-cross-roads)
-
 ## Tips
 
 * [Material design colors](https://materialui.co/colors/) are available, you can use `class="red-500"` on your HTML

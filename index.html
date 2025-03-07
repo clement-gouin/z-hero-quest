@@ -55,9 +55,21 @@
         <br />
         <hr />
       </div>
-      <!-- TODO: 5. implement custom logic -->
       <div class="header" v-html="parsed.header"></div>
-      <div v-for="(d, i) in parsed.data" :key="`data-${i}`" v-html="d"></div>
+      <h2>
+        <span
+          v-for="(item, i) in parsed.shownVars"
+          :key="`var-${i}`"
+          :title="item.name"
+        >
+          <i :icon="item.icon"></i>&nbsp;{{ debug ? item.default :
+          env[item.name] }}
+        </span>
+      </h2>
+      <br />
+      <template v-for="(item, i) in parsed.data" :key="`data-${i}`"
+        ><div v-if="debug || shownData[i]" v-html="item.data"></div
+      ></template>
     </main>
   </body>
 </html>

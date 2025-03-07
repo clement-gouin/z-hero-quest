@@ -85,7 +85,6 @@ CUSTOM STYLE
 
 :root {
   /* https://materialui.co/colors/ */
-  /* TODO: 2. change hue and saturation */
   --hue-primary: 180;
   --sat-primary: 30%;
   --background: hsl(var(--hue-primary), var(--sat-primary), 96%);

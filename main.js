@@ -18,8 +18,6 @@ const DEFAULT_VALUES = {
   header: "",
   namespace: "default",
   hasNamespace: true,
-  hue: "180",
-  saturation: "30%",
   hasColor: true,
   hasVars: false,
   shownVars: [],
@@ -53,6 +51,27 @@ const utils = {
   clone(obj) {
     return JSON.parse(JSON.stringify(obj));
   },
+  setCookie(cname, cvalue, days = 30) {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    const expires = `expires=${date.toUTCString()}`;
+    document.cookie = `${cname}=${cvalue}; path=/; ${expires}`;
+  },
+  getCookie(cname, defaultValue) {
+    const name = `${cname}=`;
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookies = decodedCookie.split(";");
+    for (let index = 0; index < cookies.length; index += 1) {
+      let cookie = cookies[index];
+      while (cookie.charAt(0) === " ") {
+        cookie = cookie.substring(1);
+      }
+      if (cookie.indexOf(name) === 0) {
+        return cookie.substring(name.length, cookie.length);
+      }
+    }
+    return defaultValue;
+  },
 };
 
 const app = createApp({
@@ -60,7 +79,7 @@ const app = createApp({
     return {
       debug: true,
       debugData:
-        'Welcome to the shop\n1\ncoins, money, 10\n0\nmoney == 0\n<span class=red>You don\'t have enough money</span>\nmoney > 100\n<span class=amber>You can buy this sword <i icon=sword></i></span>\ntrue\n<a href="?z=AIXHru50UGAS68sNpBQgWyYgIGBgCIkOgngmKVcmCsFYPwZABg5gdglg1wQIL" class=button>Go make some money</a>',
+        'Welcome to the shop\n1\ncoins, money, 10\n0\nmoney == 0\n<span class=red>You don\'t have enough money</span>\nmoney > 100\n<span class=amber>You can buy this sword <i icon=sword></i></span>\ntrue\n<a href="?z=AIXHru50UGAS68sNpBQgWyYgIGBgCIkOgngmKVcmCsFYPwZABg5gdglg1wQIL">Go make some money</a>',
       debugUrl: "",
       editor: {
         numbersCols: 0,
@@ -68,6 +87,8 @@ const app = createApp({
         overlayText: "",
       },
       parsed: DEFAULT_VALUES,
+      shownData: [],
+      env: {},
     };
   },
   computed: {},
@@ -94,15 +115,18 @@ const app = createApp({
     },
     initApp() {
       const url = new URL(window.location);
+      let zdata = null;
       if (url.searchParams.get("z") !== null) {
-        this.debug = this.readZData(
-          utils.decodeData(url.searchParams.get("z"))
-        );
+        zdata = utils.decodeData(url.searchParams.get("z"));
+        this.debug = this.readZData(zdata);
       }
       if (this.debug) {
         this.readZData(this.debugData);
         this.updateEditor(this.debugData);
         this.updateDebugUrl(this.debugData);
+      } else {
+        this.updateVars();
+        this.cleanZData(zdata);
       }
     },
     updateIcons() {
@@ -196,8 +220,12 @@ const app = createApp({
       }
       if (!/^\d+$/u.test(parts[0]) && parts[0].length) {
         const rawPart = parts.shift().split(",");
-        this.parsed.hue = (rawPart[0] ?? "180").trim();
-        this.parsed.saturation = (rawPart[1] ?? "30%").trim();
+        document
+          .querySelector(":root")
+          .style.setProperty("--hue-primary", (rawPart[0] ?? "180").trim());
+        document
+          .querySelector(":root")
+          .style.setProperty("--sat-primary", (rawPart[1] ?? "30%").trim());
       } else {
         this.parsed.hasColor = parts[0].trim().length === 0;
       }
@@ -253,6 +281,55 @@ const app = createApp({
         });
       }
       return parts;
+    },
+    readEnv() {
+      let env = {};
+      try {
+        env = JSON.parse(utils.getCookie(this.parsed.namespace, "{}"));
+      } catch {
+        env = {};
+      }
+      this.parsed.shownVars.forEach((item) => {
+        if (!Object.hasOwn(env, item.name)) {
+          env[item.name] = item.default;
+        }
+      });
+      return env;
+    },
+    saveEnv(env) {
+      utils.setCookie(this.parsed.namespace, JSON.stringify(env));
+    },
+    updateVars() {
+      this.env = this.readEnv();
+      this.parsed.changes.forEach((item) => {
+        this.env[item.name] = (this.env[item.name] ?? 0) + item.value;
+      });
+      Object.keys(this.env).forEach((key) => {
+        window[key] = this.env[key];
+      });
+      this.shownData = this.parsed.data.map((item) =>
+        Boolean(eval(item.condition))
+      );
+      this.saveEnv(this.env);
+    },
+    cleanZData(str) {
+      const headerSize =
+        HELP_HEADER.length -
+        (this.parsed.hasNamespace ? 0 : 1) -
+        (this.parsed.hasColor ? 0 : 1);
+      const varsSize =
+        1 + (this.parsed.hasVars ? this.parsed.shownVars.length : 1);
+      const changesSize =
+        1 + (this.parsed.hasChanges ? this.parsed.changes.length : 1);
+      const parts = str.split("\n");
+      parts.splice(headerSize + varsSize, changesSize, "0");
+      window.history.replaceState(
+        "",
+        "",
+        `${window.location.pathname}?z=${utils.encodeData(
+          parts.join("\n").trim()
+        )}`
+      );
     },
   },
 });

@@ -44,12 +44,12 @@ Welcome to the shop
 1
 coins, money, 10
 0
-money == 0
-<span class="red">You don't have enough money</span>
-money > 100
-<span class="amber">You can buy this sword <i icon=sword></i></span>
+money < 100
+<span class=red>You don't have enough money</span>
+money >= 100
+<span class=amber>You can buy this sword <i icon=sword></i></span>
 true
-<a href="?z=AIXHru50UGAS68sNpBQgWyYgIGBgCIkOgngmKVcmCsFYPwZABg5gdglg1wQIL" class="button">Go make some money</a> 
+<a href="?z=AIXHru50UGAS68sNpBQgWyYgIGBgCIkOgngmKVcmCsFYPwZABg5gdglg1wQIL">Go make some money</a>
 ```
 
 [Sample 2](https://clement-gouin.github.io/z-hero-quest/?z=AIXHru50UGAS68sNpBQgWyYgIGBgCIkOgngmKVcmCsFYPwZABg5gdglg1wQIL)
@@ -72,7 +72,7 @@ coins, money, 10
 2. [x] Change app hue and saturation in [style.css](./style.css)
 3. [x] Change data format in [README.md](./README.md) and [main.js](./main.js)
 4. [x] Change sample in [README.md](./README.md) and [main.js](./main.js)
-5. [ ] Implement your custom logic in [main.js](./main.js) and [index.html](./index.html)
+5. [x] Implement your custom logic in [main.js](./main.js) and [index.html](./index.html)
 6. [ ] Remove this part and all TODO
 
 ## Apps using this template

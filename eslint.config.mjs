@@ -26,6 +26,7 @@ export default [
       "max-statements": ["warn", 50],
       "max-params": ["warn", 5],
       "max-lines": "off",
+      "no-eval": "off",
     },
   },
   eslintConfigPrettier,

@@ -1,5 +1,7 @@
 # [Z] Hero Quest
-*Here to slay dragons *
+*Here to slay dragons*
+
+> Part of the [Z-Apps](https://github.com/clement-gouin/z-app)
 
 ### [Tool link](https://clement-gouin.github.io/z-hero-quest/)
 

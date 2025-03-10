@@ -307,9 +307,13 @@ const app = createApp({
       Object.keys(this.env).forEach((key) => {
         window[key] = this.env[key];
       });
-      this.shownData = this.parsed.data.map((item) =>
-        Boolean(eval(item.condition))
-      );
+      this.shownData = this.parsed.data.map((item) => {
+        try {
+          return Boolean(eval(item.condition));
+        } catch {
+          return false;
+        }
+      });
       this.saveEnv(this.env);
     },
     cleanZData(str) {

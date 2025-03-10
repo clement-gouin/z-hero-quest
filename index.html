@@ -56,13 +56,14 @@
         <hr />
       </div>
       <div class="header" v-html="parsed.header"></div>
-      <h2>
+      <h2 class="var-container">
         <span
           v-for="(item, i) in parsed.shownVars"
           :key="`var-${i}`"
           :title="item.name"
+          class="var"
         >
-          <i :icon="item.icon"></i>&nbsp;{{ debug ? item.default :
+          <span v-html="icon(item.icon)"></span>&nbsp;{{ debug ? item.default :
           env[item.name] }}
         </span>
       </h2>

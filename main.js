@@ -331,6 +331,9 @@ const app = createApp({
         )}`
       );
     },
+    icon(name) {
+      return `<i icon=${name}></i>`;
+    },
   },
 });
 

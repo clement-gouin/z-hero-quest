@@ -236,3 +236,8 @@ h6 .lucide {
   overflow: hidden;
   background: none;
 }
+
+.var-container {
+  display: flex;
+  gap: 0.5em;
+}

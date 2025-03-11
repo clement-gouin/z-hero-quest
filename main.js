@@ -306,6 +306,7 @@ const app = createApp({
       });
       this.parsed.changes.forEach((item) => {
         this.env[item.name] = eval(item.value);
+        window[item.name] = this.env[item.name];
       });
       this.shownData = this.parsed.data.map((item) => {
         try {

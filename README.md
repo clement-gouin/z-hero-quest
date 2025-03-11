@@ -42,14 +42,14 @@ Part 3 (Conditional data, repeatable)
 ```txt
 Welcome to the shop
 1
-coins, money, 10
+money, coins, 10
 0
 money < 100
 <span class=red>You don't have enough money</span>
 money >= 100
 <span class=amber>You can buy this sword <i icon=sword></i></span>
 true
-<a href="?z=AIXHru50UGAS68sNpBQgWyYgIGBgCIkOgngmKVcmCsFYPwZABg5gdglg1wQIL">Go make some money</a>
+<a href="?z=AA5JI0DgMg5kQAwRScA8BoOlAoAAMtQMCggYkiQARBuAExBAIiplAE3AAxKAEBwuZAoFzCA4gwDAR0cFgTAcBgIGAIhjaAO3VTeB48szTFolMGgjGAXHrIGBgCIkOgngmKVcmCsFYPwZABg5gdglg1wQIL">Go make some money</a>
 ```
 
 [Sample 2](https://clement-gouin.github.io/z-hero-quest/?z=AIXHru50UGAS68sNpBQgWyYgIGBgCIkOgngmKVcmCsFYPwZABg5gdglg1wQIL)
@@ -57,9 +57,11 @@ true
 ```txt
 Making some money...
 1
-coins, money, 10
+money, coins
 1
-10, money
+money = money + 10
+true
+<a href="javascript:history.back()">Go Back</a>
 ```
 
 ## Tips

@@ -7,13 +7,13 @@ const HELP_HEADER = [
 ];
 const HELP_PART_1 = [
   "Number of variables shown (0+)",
-  "Lucide Icon, Variable Name, Default Value (numeric)",
+  "Variable Name, Lucide Icon, Default value (js, default to 0)",
 ];
 const HELP_PART_2 = [
   "Number of changes (0+)",
-  "Value change (numeric), Variable Name",
+  "Variable Name = Value change (js)",
 ];
-const HELP_PART_3 = ["Condition (JS eval of variables)", "Data (html)"];
+const HELP_PART_3 = ["Condition (js)", "Data (html)"];
 const DEFAULT_VALUES = {
   header: "",
   namespace: "default",
@@ -79,7 +79,7 @@ const app = createApp({
     return {
       debug: true,
       debugData:
-        'Welcome to the shop\n1\ncoins, money, 10\n0\nmoney == 0\n<span class=red>You don\'t have enough money</span>\nmoney > 100\n<span class=amber>You can buy this sword <i icon=sword></i></span>\ntrue\n<a href="?z=AIXHru50UGAS68sNpBQgWyYgIGBgCIkOgngmKVcmCsFYPwZABg5gdglg1wQIL">Go make some money</a>',
+        'Welcome to the shop\n1\nmoney, coins, 10\n0\nmoney == 0\n<span class=red>You don\'t have enough money</span>\nmoney > 100\n<span class=amber>You can buy this sword <i icon=sword></i></span>\ntrue\n<a href="?z=AIXHru50UGAS68sNpBQgWyYgIGBgCIkOgngmKVcmCsFYPwZABg5gdglg1wQIL">Go make some money</a>',
       debugUrl: "",
       editor: {
         numbersCols: 0,
@@ -244,9 +244,9 @@ const app = createApp({
         }
         const rawPart = parts.shift().split(",");
         this.parsed.shownVars.push({
-          icon: (rawPart[0] ?? "circle-help").trim(),
-          name: (rawPart[1] ?? "var").trim(),
-          default: parseFloat((rawPart[2] ?? "0").trim()),
+          name: (rawPart[0] ?? "var").trim(),
+          icon: (rawPart[1] ?? "circle-help").trim(),
+          default: (rawPart[2] ?? "0").trim(),
         });
       }
       return parts;
@@ -265,10 +265,10 @@ const app = createApp({
         if (!parts.length) {
           return parts;
         }
-        const rawPart = parts.shift().split(",");
+        const rawPart = parts.shift().split("=");
         this.parsed.changes.push({
-          value: parseFloat((rawPart[0] ?? "0").trim()),
-          name: (rawPart[1] ?? "var").trim(),
+          name: (rawPart[0] ?? "var").trim(),
+          value: (rawPart[1] ?? "0").trim(),
         });
       }
       return parts;
@@ -291,7 +291,7 @@ const app = createApp({
       }
       this.parsed.shownVars.forEach((item) => {
         if (!Object.hasOwn(env, item.name)) {
-          env[item.name] = item.default;
+          env[item.name] = eval(item.default);
         }
       });
       return env;
@@ -301,11 +301,11 @@ const app = createApp({
     },
     updateVars() {
       this.env = this.readEnv();
-      this.parsed.changes.forEach((item) => {
-        this.env[item.name] = (this.env[item.name] ?? 0) + item.value;
-      });
       Object.keys(this.env).forEach((key) => {
         window[key] = this.env[key];
+      });
+      this.parsed.changes.forEach((item) => {
+        this.env[item.name] = eval(item.value);
       });
       this.shownData = this.parsed.data.map((item) => {
         try {

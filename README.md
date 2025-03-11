@@ -19,18 +19,18 @@ Header (1-3 line):
 Part 1 (variables)
 ```txt
 1    Number of variables shown (0+)
-2*   Lucide Icon, Variable Name, Default Value (numeric)
+2*   Variable Name, Lucide Icon, Default value (js, default to 0)
 ```
 
 Part 2 (changes)
 ```txt
 1    Number of changes (0+)
-2*   Value change (numeric), Variable Name
+2*   Variable Name = Value change (js)
 ```
 
 Part 3 (Conditional data, repeatable)
 ```txt
-1   Condition (JS eval of variables)
+1   Condition (js)
 2   Data (html)
 ```
 

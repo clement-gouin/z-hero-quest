@@ -291,7 +291,11 @@ const app = createApp({
       }
       this.parsed.shownVars.forEach((item) => {
         if (!Object.hasOwn(env, item.name)) {
-          env[item.name] = eval(item.default);
+          try {
+            env[item.name] = eval(item.default);
+          } catch {
+            env[item.name] = null;
+          }
         }
       });
       return env;
@@ -305,7 +309,11 @@ const app = createApp({
         window[key] = this.env[key];
       });
       this.parsed.changes.forEach((item) => {
-        this.env[item.name] = eval(item.value);
+        try {
+          this.env[item.name] = eval(item.value);
+        } catch {
+          this.env[item.name] = null;
+        }
         window[item.name] = this.env[item.name];
       });
       this.shownData = this.parsed.data.map((item) => {

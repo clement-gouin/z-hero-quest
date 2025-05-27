@@ -118,7 +118,6 @@ main {
 
 table {
   border-collapse: collapse;
-  width: 100%;
   font-size: 0.9em;
 }
 
@@ -283,4 +282,81 @@ h6 .lucide {
 .admonition.orange {
   --hue-primary: 35.76;
   --sat-primary: 100%;
+}
+
+dl dd {
+  margin-left: 1em;
+}
+
+hr {
+  border-color: hsl(var(--hue-primary), var(--sat-primary), 70%);
+  border-width: 1px 0 0 0;
+  margin: 1em;
+}
+
+.emojione {
+  display: inline-flex;
+  height: 1.125em;
+  vertical-align: text-top;
+}
+
+table {
+  text-align: center;
+  border: 1px solid hsl(var(--hue-primary), var(--sat-primary), 70%);
+}
+
+th,
+td {
+  padding: 0.5em 1em;
+  border: 1px solid hsl(var(--hue-primary), var(--sat-primary), 70%);
+}
+
+.progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: 700;
+  width: 100%;
+  margin: 0;
+  line-height: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 1.1rem;
+  float: left;
+  background-color: hsl(var(--hue-primary), var(--sat-primary), 55%);
+  border-radius: 0.25em;
+}
+
+.progress {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0;
+  height: 1.2rem;
+  border: 1px solid hsl(var(--hue-primary), var(--sat-primary), 70%);
+  border-radius: 0.25em;
+  position: relative;
+}
+
+.progress.thin {
+  margin-top: 0.9rem;
+  height: 0.4rem;
+}
+
+.progress.thin .progress-label {
+  margin-top: -0.4rem;
+}
+
+.progress.thin .progress-bar {
+  height: 0.4rem;
+}
+
+.task-list-item {
+  list-style-type: none !important;
+}
+
+.task-list-item input[type="checkbox"] {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
 }

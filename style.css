@@ -119,6 +119,7 @@ main {
 table {
   border-collapse: collapse;
   font-size: 0.9em;
+  margin-bottom: 1em;
 }
 
 p,
@@ -126,6 +127,15 @@ ul,
 ol {
   margin-bottom: 1em;
   color: hsl(var(--hue-primary), var(--sat-primary), 30%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5em;
 }
 
 textarea,
@@ -288,10 +298,18 @@ dl dd {
   margin-left: 1em;
 }
 
+blockquote {
+  padding-left: 1em;
+  font-style: italic;
+  border-left: 2px solid hsl(var(--hue-primary), var(--sat-primary), 70%);
+}
+
 hr {
-  border-color: hsl(var(--hue-primary), var(--sat-primary), 70%);
-  border-width: 1px 0 0 0;
-  margin: 1em;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid hsl(var(--hue-primary), var(--sat-primary), 70%);
+  margin-bottom: 1em;
 }
 
 .emojione {
@@ -332,7 +350,7 @@ td {
 .progress {
   display: block;
   width: 100%;
-  margin: 0.5rem 0;
+  margin-bottom: 1em;
   height: 1.2rem;
   border: 1px solid hsl(var(--hue-primary), var(--sat-primary), 70%);
   border-radius: 0.25em;

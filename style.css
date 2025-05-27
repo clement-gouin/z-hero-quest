@@ -252,20 +252,24 @@ h6 .lucide {
   gap: 0.5em;
 }
 
+pre {
+  padding: 1em;
+  margin-bottom: 1em;
+  border: 1px solid hsl(var(--hue-primary), var(--sat-primary), 60%);
+  background-color: hsl(var(--hue-primary), var(--sat-primary), 90%);
+  border-radius: 0.25em;
+}
+
 .admonition {
   padding: 1em;
   margin-bottom: 1em;
-  border: 1px solid transparent;
+  border: 1px solid hsl(var(--hue-primary), var(--sat-primary), 60%);
+  background-color: hsl(var(--hue-primary), var(--sat-primary), 90%);
   border-radius: 0.25em;
 }
 
 .admonition *:last-child {
   margin-bottom: 0;
-}
-
-.admonition {
-  background-color: hsl(var(--hue-primary), var(--sat-primary), 90%);
-  border-color: hsl(var(--hue-primary), var(--sat-primary), 60%);
 }
 
 .admonition-title {

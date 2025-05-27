@@ -1,76 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hero Quest</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="material-colors.css" />
-    <script src="https://unpkg.com/lz-string@1.5"></script>
-    <script src="https://unpkg.com/lucide@0"></script>
-    <script type="importmap">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hero Quest</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="material-colors.css" />
+  <script src="https://unpkg.com/lz-string@1.5"></script>
+  <script src="https://unpkg.com/lucide@0"></script>
+  <script type="importmap">
       {
         "imports": {
           "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
         }
       }
     </script>
-    <script type="module" src="main.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-  </head>
-  <body>
-    <main id="app" style="display: none">
-      <div v-if="debug">
-        <h1><i icon="sword"></i> Hero Quest</h1>
-        <div class="editor">
-          <textarea
-            class="numbers"
-            :cols="editor.numbersCols"
-            rows="10"
-            readonly
-            ref="numbers"
-            v-model="editor.numbersText"
-          ></textarea>
-          <textarea
-            class="code"
-            v-model="debugData"
-            ref="code"
-            rows="10"
-            @scroll="editorScroll"
-          ></textarea>
-          <div class="overlay">
-            <textarea :cols="editor.numbersCols" rows="10" readonly></textarea>
-            <textarea
-              ref="overlay"
-              class="code"
-              rows="10"
-              readonly
-              v-model="editor.overlayText"
-            ></textarea>
-          </div>
+  <script type="module" src="main.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+  <main id="app" style="display: none">
+    <div v-if="debug">
+      <h1><i icon="sword"></i> Hero Quest</h1>
+      <div class="editor">
+        <textarea class="numbers" :cols="editor.numbersCols" rows="10" readonly ref="numbers"
+          v-model="editor.numbersText"></textarea>
+        <textarea class="code" v-model="debugData" ref="code" rows="10" @scroll="editorScroll"></textarea>
+        <div class="overlay">
+          <textarea :cols="editor.numbersCols" rows="10" readonly></textarea>
+          <textarea ref="overlay" class="code" rows="10" readonly v-model="editor.overlayText"></textarea>
         </div>
-        <a v-if="debugUrl" :href="debugUrl" target="_blank"
-          ><i icon="link"></i> Output link</a
-        >
-        <br />
-        <br />
-        <hr />
       </div>
-      <div class="header" v-html="parsed.header"></div>
-      <h2 class="var-container">
-        <span
-          v-for="(item, i) in parsed.shownVars"
-          :key="`var-${i}`"
-          :title="item.name"
-          class="var"
-        >
-          <span v-html="icon(item.icon)"></span>&nbsp;{{ debug ? item.default :
-          env[item.name] }}
-        </span>
-      </h2>
+      <a v-if="debugUrl" :href="debugUrl" target="_blank"><i icon="link"></i> Output link</a>
       <br />
-      <template v-for="(item, i) in parsed.data" :key="`data-${i}`"
-        ><div v-if="debug || shownData[i]" v-html="item.data"></div
-      ></template>
-    </main>
-  </body>
+      <br />
+      <hr />
+    </div>
+    <div class="header" v-html="header"></div>
+    <h2 class="var-container">
+      <span v-for="(item, i) in parsed.shownVars" :key="`var-${i}`" :title="item.name" class="var">
+        <span v-html="icon(item.icon)"></span>&nbsp;{{ debug ? item.default : env[item.name] }}
+      </span>
+    </h2>
+    <br />
+    <template v-for="(item, i) in shownData" :key="`data-${i}`">
+      <div v-html="item.data"></div>
+    </template>
+  </main>
+</body>
+
 </html>

@@ -79,7 +79,7 @@ const app = createApp({
     return {
       debug: true,
       debugData:
-        'Welcome to the shop\n1\nmoney, coins, 10\n0\nmoney == 0\n<span class=red>You don\'t have enough money</span>\nmoney > 100\n<span class=amber>You can buy this sword <i icon=sword></i></span>\ntrue\n<a href="?z=AIXHru50UGAS68sNpBQgWyYgIGBgCIkOgngmKVcmCsFYPwZABg5gdglg1wQIL">Go make some money</a>',
+        'Welcome to the shop\n1\nmoney, coins, 10\n0\nmoney < 100\n<span class="button disabled"><i icon=sword></i> Buy the sword (100 <i icon=coins></i>)</span>\nmoney >= 100\n<a class=button href="?z=AElAU4Kwm6mGP5cFSBAmEo5sLBsoBrkTNxYFC2chDNywSDASyBqaOCYQBAE2SEsuWYF5iGW8DACMBQ-liQuFmh45jg4pyCAgxMA5XIDAwBAsBArAkJ7AAGtAgEzIBinEpJymDCGq5JGoQl5Ywh-aKREXAY4AAzWICANCcdboJmIhCDeJdAM7BAHUwS1Qcu8dZLASuTV0dRbAQOA1Jdp1TAGCQWAI4qFF8IYfPbWTBQmZdBAxcgajAYdFQSTAWCa6BoMB4EI5OwZAvA7A2DMG0EAWCMfAjwCwD"><i icon=sword></i> Buy the sword (100 <i icon=coins></i>)</span>\ntrue\n<a class=button href="?z=AQgAMoBcEHGhAANsEHAfVQrwbzs4w6cYkCJJdj-xYyfmwbEy1CJ85YDekGBtgRcsajLA0yBAQgJx70NAgxKAICApCzfQQjYt0iDGkCDMgxGAEHNYAOV84gJtSVQ0oGA0y2SpQjUryMdM80WSJhoUBDKAIEA04JS3BADC0BN_xyMAwjB0RGZ95ZiWJN5JlNdiohP6LAKBEgGNAkJWItACFkCAeAADH5QcBA2aeDwSZz6JoWPDyJ5FgYjBQgGBw0YAAWgJAMhuCYpJAhTAGBATgTPAcJdAeC4JZ5oZKwWg9AnBEAMHYHwSg1ghgsAfAjwCwD"><i icon=arrow-big-right></i> Go make some money</a>',
       debugUrl: "",
       editor: {
         numbersCols: 0,
@@ -89,14 +89,19 @@ const app = createApp({
       parsed: DEFAULT_VALUES,
       shownData: [],
       env: {},
+      header: "",
     };
   },
   computed: {},
   watch: {
     debugData(value) {
       this.readZData(value);
-      this.updateEditor(value);
-      this.updateDebugUrl(value);
+      if (this.debug) {
+        this.updateEditor(value);
+        this.updateDebugUrl(value);
+        this.header = this.parsed.header;
+        this.shownData = this.parsed.data;
+      }
     },
   },
   beforeMount() {
@@ -124,8 +129,12 @@ const app = createApp({
         this.readZData(this.debugData);
         this.updateEditor(this.debugData);
         this.updateDebugUrl(this.debugData);
+        this.header = this.parsed.header;
+        this.shownData = this.parsed.data;
       } else {
         this.updateVars();
+        this.updateShownData();
+        this.header = this.insertVars(this.parsed.header);
         this.cleanZData(zdata);
       }
     },
@@ -316,14 +325,34 @@ const app = createApp({
         }
         window[item.name] = this.env[item.name];
       });
-      this.shownData = this.parsed.data.map((item) => {
+      this.saveEnv(this.env);
+    },
+    updateShownData() {
+      this.shownData = this.parsed.data
+        .filter((item) => {
+          try {
+            return Boolean(eval(item.condition));
+          } catch {
+            return false;
+          }
+        })
+        .map((item) => ({
+          condition: item.condition,
+          data: this.insertVars(item.data),
+        }));
+    },
+    insertVars(value) {
+      let newValue = value;
+      [...value.matchAll(/\{\{(?<expr>[^}]+)\}\}/gu)].forEach((match) => {
+        const [fullMatch, expression] = match;
         try {
-          return Boolean(eval(item.condition));
+          const result = eval(expression);
+          newValue = newValue.replaceAll(fullMatch, result);
         } catch {
-          return false;
+          /* Ignore and keep unchanged */
         }
       });
-      this.saveEnv(this.env);
+      return newValue;
     },
     cleanZData(str) {
       const headerSize =

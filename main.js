@@ -346,7 +346,9 @@ const app = createApp({
       [...value.matchAll(/\{\{(?<expr>[^}]+)\}\}/gu)].forEach((match) => {
         const [fullMatch, expression] = match;
         try {
-          const result = eval(expression);
+          const result = eval(
+            expression.replaceAll("&lt;", "<").replaceAll("&gt;", ">")
+          );
           newValue = newValue.replaceAll(fullMatch, result);
         } catch {
           /* Ignore and keep unchanged */

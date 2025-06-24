@@ -135,7 +135,7 @@ const app = createApp({
         this.updateVars();
         this.updateShownData();
         this.header = this.insertVars(this.parsed.header);
-        this.cleanZData(zdata);
+        //this.cleanZData(zdata);
       }
     },
     updateIcons() {
@@ -274,7 +274,7 @@ const app = createApp({
         if (!parts.length) {
           return parts;
         }
-        const rawPart = parts.shift().split("=");
+        const rawPart = parts.shift().split("=", 2);
         this.parsed.changes.push({
           name: (rawPart[0] ?? "var").trim(),
           value: (rawPart[1] ?? "0").trim(),

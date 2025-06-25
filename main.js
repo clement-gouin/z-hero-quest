@@ -135,7 +135,7 @@ const app = createApp({
         this.updateVars();
         this.updateShownData();
         this.header = this.insertVars(this.parsed.header);
-        //this.cleanZData(zdata);
+        this.cleanZData(zdata);
       }
     },
     updateIcons() {
@@ -274,10 +274,14 @@ const app = createApp({
         if (!parts.length) {
           return parts;
         }
-        const rawPart = parts.shift().split("=", 2);
+        const rawPart = parts.shift();
+        const splitIndex = rawPart.indexOf("=");
         this.parsed.changes.push({
-          name: (rawPart[0] ?? "var").trim(),
-          value: (rawPart[1] ?? "0").trim(),
+          name: (splitIndex >= 0
+            ? rawPart.slice(0, splitIndex)
+            : rawPart
+          ).trim(),
+          value: (splitIndex >= 0 ? rawPart.slice(splitIndex + 1) : "0").trim(),
         });
       }
       return parts;

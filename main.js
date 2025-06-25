@@ -306,7 +306,9 @@ const app = createApp({
         if (!Object.hasOwn(env, item.name)) {
           try {
             env[item.name] = eval(item.default);
-          } catch {
+          } catch (error) {
+            // eslint-disable-next-line no-console
+            console.error(item.default, error);
             env[item.name] = null;
           }
         }
@@ -324,7 +326,9 @@ const app = createApp({
       this.parsed.changes.forEach((item) => {
         try {
           this.env[item.name] = eval(item.value);
-        } catch {
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(item.value, error);
           this.env[item.name] = null;
         }
         window[item.name] = this.env[item.name];
@@ -336,7 +340,9 @@ const app = createApp({
         .filter((item) => {
           try {
             return Boolean(eval(item.condition));
-          } catch {
+          } catch (error) {
+            // eslint-disable-next-line no-console
+            console.error(item.condition, error);
             return false;
           }
         })
@@ -349,12 +355,15 @@ const app = createApp({
       let newValue = value;
       [...value.matchAll(/\{\{(?<expr>[^}]+)\}\}/gu)].forEach((match) => {
         const [fullMatch, expression] = match;
+        const parsedExpression = expression
+          .replaceAll("&lt;", "<")
+          .replaceAll("&gt;", ">");
         try {
-          const result = eval(
-            expression.replaceAll("&lt;", "<").replaceAll("&gt;", ">")
-          );
+          const result = eval(parsedExpression);
           newValue = newValue.replaceAll(fullMatch, result);
-        } catch {
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(parsedExpression, error);
           /* Ignore and keep unchanged */
         }
       });

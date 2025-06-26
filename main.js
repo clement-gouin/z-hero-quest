@@ -357,7 +357,8 @@ const app = createApp({
         const [fullMatch, expression] = match;
         const parsedExpression = expression
           .replaceAll("&lt;", "<")
-          .replaceAll("&gt;", ">");
+          .replaceAll("&gt;", ">")
+          .replaceAll("&amp;", "&");
         try {
           const result = eval(parsedExpression);
           newValue = newValue.replaceAll(fullMatch, result);

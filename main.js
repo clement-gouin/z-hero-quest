@@ -365,7 +365,7 @@ const app = createApp({
         } catch (error) {
           // eslint-disable-next-line no-console
           console.error(parsedExpression, error);
-          /* Ignore and keep unchanged */
+          newValue = newValue.replaceAll(fullMatch, "");
         }
       });
       return newValue;
